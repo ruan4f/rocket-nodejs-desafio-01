@@ -72,6 +72,7 @@ app.post("/todos", checksExistsUserAccount, (request, response) => {
 
 app.put("/todos/:id", checksExistsUserAccount, (request, response) => {
   const { user } = request;
+  const { id } = request.params;
   const { title, deadline } = request.body;
 
   const todo = user.todos.find(todo => todo.id === id);
@@ -90,7 +91,7 @@ app.put("/todos/:id", checksExistsUserAccount, (request, response) => {
 
 app.patch("/todos/:id/done", checksExistsUserAccount, (request, response) => {
   const { user } = request;
-  const { id } = request.query;
+  const { id } = request.params;
 
   const todo = user.todos.find(todo => todo.id === id);
 
@@ -102,7 +103,7 @@ app.patch("/todos/:id/done", checksExistsUserAccount, (request, response) => {
 
   todo.done = true;
 
-  return response.status(201).send();
+  return response.json(todo);
 });
 
 app.delete("/todos/:id", checksExistsUserAccount, (request, response) => {
